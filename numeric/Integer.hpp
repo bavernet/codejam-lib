@@ -10,12 +10,13 @@
 
 class Integer {
 private:
-	static const unsigned long long _base { std::numeric_limits<unsigned long>::max() };
-
 	bool _negative;
 	std::vector<unsigned long> _data;
 
-	int _compare(const std::vector<unsigned long> &a, const std::vector<unsigned long> &b) const {
+private:
+	static const unsigned long long _base { std::numeric_limits<unsigned long>::max() };
+
+	static int _compare(const std::vector<unsigned long> &a, const std::vector<unsigned long> &b) {
 		if (a.size() != b.size())
 			return a.size() < b.size()? -1: 1;
 
@@ -69,24 +70,24 @@ public:
 		}
 	}
 
-	bool operator ==(const Integer &rhs) const {
-		return _negative == rhs._negative && _compare(_data, rhs._data) == 0;
+	friend bool operator ==(const Integer &lhs, const Integer &rhs) {
+		return lhs._negative == rhs._negative && _compare(lhs._data, rhs._data) == 0;
 	}
 
-	bool operator !=(const Integer &rhs) const {
-		return !(*this == rhs);
+	friend bool operator !=(const Integer &lhs, const Integer &rhs) {
+		return !(lhs == rhs);
 	}
 
-	bool operator <(const Integer &rhs) const {
-		if (_negative && !rhs._negative)
+	friend bool operator <(const Integer &lhs, const Integer &rhs) {
+		if (lhs._negative && !rhs._negative)
 			return true;
-		if (_negative)
-			return _compare(_data, rhs._data) > 0;
-		return _compare(_data, rhs._data) < 0;
+		if (lhs._negative)
+			return _compare(lhs._data, rhs._data) > 0;
+		return _compare(lhs._data, rhs._data) < 0;
 	}
 
-	bool operator >(const Integer &rhs) const {
-		return rhs < *this;
+	friend bool operator >(const Integer &lhs, const Integer &rhs) {
+		return rhs < lhs;
 	}
 };
 

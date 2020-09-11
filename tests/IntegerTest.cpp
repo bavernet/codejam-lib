@@ -23,7 +23,9 @@ protected:
 
 TEST_F(IntegerTest, constructFromNumber) {
 	EXPECT_EQ(iOne, 1);
+	EXPECT_EQ(1, iOne);
 	EXPECT_EQ(iMinusOne, -1);
+	EXPECT_EQ(-1, iMinusOne);
 	EXPECT_NE(iOne, iMinusOne);
 
 	EXPECT_EQ(llTrillion, 1'000'000'000'000LL);
@@ -44,7 +46,9 @@ TEST_F(IntegerTest, constructFromNumber) {
 
 TEST_F(IntegerTest, constructFromString) {
 	EXPECT_EQ(sOne, 1);
+	EXPECT_EQ(1, sOne);
 	EXPECT_EQ(sMinusOne, -1);
+	EXPECT_EQ(-1, sMinusOne);
 	EXPECT_EQ(sOne, iOne);
 	EXPECT_EQ(sMinusOne, iMinusOne);
 	EXPECT_NE(sOne, sMinusOne);
