@@ -89,6 +89,14 @@ public:
 	friend bool operator >(const Integer &lhs, const Integer &rhs) {
 		return rhs < lhs;
 	}
+
+	friend bool operator <=(const Integer &lhs, const Integer &rhs) {
+		return lhs == rhs || lhs < rhs;
+	}
+
+	friend bool operator >=(const Integer &lhs, const Integer &rhs) {
+		return lhs == rhs || lhs > rhs;
+	}
 };
 
 #endif
