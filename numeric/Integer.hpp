@@ -7,16 +7,17 @@
 #include <cctype>
 #include <vector>
 #include <string>
+#include <cstdint>
 
 class Integer {
 private:
 	bool _negative;
-	std::vector<unsigned long> _data;
+	std::vector<uint32_t> _data;
 
 private:
-	static const unsigned long long _base { std::numeric_limits<unsigned long>::max() };
+	static const uint64_t _base { std::numeric_limits<uint32_t>::max() };
 
-	static int _compare(const std::vector<unsigned long> &a, const std::vector<unsigned long> &b) {
+	static int _compare(const std::vector<uint32_t> &a, const std::vector<uint32_t> &b) {
 		if (a.size() != b.size())
 			return a.size() < b.size()? -1: 1;
 
@@ -34,7 +35,7 @@ public:
 
 	template <typename T, typename=typename std::enable_if<std::is_arithmetic<T>::value>::type>
 	Integer(const T &i): _negative(false) {
-		long long v = i;
+		int64_t v = i;
 		if (v < 0LL)
 			_negative = true, v = -v;
 
@@ -58,7 +59,7 @@ public:
 				if (!isdigit(*it))
 					throw std::runtime_error("Integer cannot be initialized from a non-number string: " + s);
 
-				unsigned long long val = *it - '0';
+				uint64_t val = *it - '0';
 				for (auto &d : _data) {
 					val += 10ULL * d;
 					d = val % _base;
