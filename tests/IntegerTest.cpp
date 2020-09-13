@@ -137,3 +137,79 @@ TEST_F(IntegerTest, toString2) {
 	EXPECT_EQ(Integer("-12345678901234567890123456789").toString(2),
 			  "-1001111110010000011011001100100100011010111110110010011011000101101110001110011000000100010101");
 }
+
+TEST_F(IntegerTest, toString8) {
+	EXPECT_EQ(Integer(1).toString(8), "1");
+	EXPECT_EQ(Integer(2).toString(8), "2");
+	EXPECT_EQ(Integer(3).toString(8), "3");
+	EXPECT_EQ(Integer(4).toString(8), "4");
+	EXPECT_EQ(Integer(5).toString(8), "5");
+	EXPECT_EQ(Integer(6).toString(8), "6");
+	EXPECT_EQ(Integer(7).toString(8), "7");
+	EXPECT_EQ(Integer(8).toString(8), "10");
+	EXPECT_EQ(Integer(9).toString(8), "11");
+	EXPECT_EQ(Integer(10).toString(8), "12");
+	EXPECT_EQ(Integer("12345678901234567890123456789").toString(8),
+			  "11762033144432766233055616300425");
+
+	EXPECT_EQ(Integer(-1).toString(8), "-1");
+	EXPECT_EQ(Integer(-2).toString(8), "-2");
+	EXPECT_EQ(Integer(-3).toString(8), "-3");
+	EXPECT_EQ(Integer(-4).toString(8), "-4");
+	EXPECT_EQ(Integer(-5).toString(8), "-5");
+	EXPECT_EQ(Integer(-6).toString(8), "-6");
+	EXPECT_EQ(Integer(-7).toString(8), "-7");
+	EXPECT_EQ(Integer(-8).toString(8), "-10");
+	EXPECT_EQ(Integer(-9).toString(8), "-11");
+	EXPECT_EQ(Integer(-10).toString(8), "-12");
+	EXPECT_EQ(Integer("-12345678901234567890123456789").toString(8),
+			  "-11762033144432766233055616300425");
+}
+
+TEST_F(IntegerTest, toString16) {
+	EXPECT_EQ(Integer(1).toString(16), "1");
+	EXPECT_EQ(Integer(2).toString(16), "2");
+	EXPECT_EQ(Integer(3).toString(16), "3");
+	EXPECT_EQ(Integer(4).toString(16), "4");
+	EXPECT_EQ(Integer(5).toString(16), "5");
+	EXPECT_EQ(Integer(6).toString(16), "6");
+	EXPECT_EQ(Integer(7).toString(16), "7");
+	EXPECT_EQ(Integer(8).toString(16), "8");
+	EXPECT_EQ(Integer(9).toString(16), "9");
+	EXPECT_EQ(Integer(10).toString(16), "A");
+	EXPECT_EQ(Integer(11).toString(16), "B");
+	EXPECT_EQ(Integer(12).toString(16), "C");
+	EXPECT_EQ(Integer(13).toString(16), "D");
+	EXPECT_EQ(Integer(14).toString(16), "E");
+	EXPECT_EQ(Integer(15).toString(16), "F");
+	EXPECT_EQ(Integer(16).toString(16), "10");
+	EXPECT_EQ(Integer(17).toString(16), "11");
+	EXPECT_EQ(Integer(18).toString(16), "12");
+	EXPECT_EQ(Integer(19).toString(16), "13");
+	EXPECT_EQ(Integer(20).toString(16), "14");
+	EXPECT_EQ(Integer("12345678901234567890123456789").toString(16),
+			  "27E41B3246BEC9B16E398115");
+
+	EXPECT_EQ(Integer(-1).toString(16), "-1");
+	EXPECT_EQ(Integer(-2).toString(16), "-2");
+	EXPECT_EQ(Integer(-3).toString(16), "-3");
+	EXPECT_EQ(Integer(-4).toString(16), "-4");
+	EXPECT_EQ(Integer(-5).toString(16), "-5");
+	EXPECT_EQ(Integer(-6).toString(16), "-6");
+	EXPECT_EQ(Integer(-7).toString(16), "-7");
+	EXPECT_EQ(Integer(-8).toString(16), "-8");
+	EXPECT_EQ(Integer(-9).toString(16), "-9");
+	EXPECT_EQ(Integer(-10).toString(16), "-A");
+	EXPECT_EQ(Integer(-11).toString(16), "-B");
+	EXPECT_EQ(Integer(-12).toString(16), "-C");
+	EXPECT_EQ(Integer(-13).toString(16), "-D");
+	EXPECT_EQ(Integer(-14).toString(16), "-E");
+	EXPECT_EQ(Integer(-15).toString(16), "-F");
+	EXPECT_EQ(Integer(-16).toString(16), "-10");
+	EXPECT_EQ(Integer(-17).toString(16), "-11");
+	EXPECT_EQ(Integer(-18).toString(16), "-12");
+	EXPECT_EQ(Integer(-19).toString(16), "-13");
+	EXPECT_EQ(Integer(-20).toString(16), "-14");
+	EXPECT_EQ(Integer("-12345678901234567890123456789").toString(16),
+			  "-27E41B3246BEC9B16E398115");
+}
