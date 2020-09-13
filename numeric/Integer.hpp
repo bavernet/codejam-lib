@@ -7,6 +7,7 @@
 #include <cctype>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <cstdint>
 
 class Integer {
@@ -69,6 +70,38 @@ public:
 					_data.emplace_back(val);
 			}
 		}
+	}
+
+	std::string toString(uint32_t base=10U) const {
+		if (base > 36U)
+			throw std::runtime_error("Integer.toString does not support conversions beyond base 36: current base=" + base);
+
+		std::string ans;
+		std::vector<uint32_t> v { _data };
+		while (!v.empty()) {
+			uint64_t r = 0;
+			for (auto it = v.rbegin(), end = v.rend(); it != end; ++it) {
+				r = r * _base + *it;
+				*it = r / base;
+				r %= base;
+			}
+
+			if (r < 10)
+				ans.push_back(r + '0');
+			else if (r < 36)
+				ans.push_back(r - 10 + 'A');
+
+			if (!v.back())
+				v.pop_back();
+		}
+		if (_negative)
+			ans.push_back('-');
+		std::reverse(ans.begin(), ans.end());
+		return ans;
+	}
+
+	operator std::string() const {
+		return toString();
 	}
 
 	friend bool operator ==(const Integer &lhs, const Integer &rhs) {
