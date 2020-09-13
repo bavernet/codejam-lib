@@ -70,6 +70,9 @@ public:
 					_data.emplace_back(val);
 			}
 		}
+
+		if (_data.empty())
+			_negative = false, _data.emplace_back(0);
 	}
 
 	std::string toString(uint32_t base=10U) const {
