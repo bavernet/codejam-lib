@@ -86,6 +86,8 @@ TEST_F(IntegerTest, constructFromString) {
 }
 
 TEST_F(IntegerTest, toString10) {
+	EXPECT_EQ(std::string(Integer("-0")), "0");
+	EXPECT_EQ(std::string(sZero), "0");
 	EXPECT_EQ(std::string(iOne), "1");
 	EXPECT_EQ(std::string(iMinusOne), "-1");
 	EXPECT_EQ(std::string(llTrillion), "1000000000000");
