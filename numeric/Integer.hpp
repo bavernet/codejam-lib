@@ -30,6 +30,55 @@ private:
 		return 0;
 	}
 
+	static std::vector<uint32_t> _add(const std::vector<uint32_t> &a, const std::vector<uint32_t> &b) {
+		if (a.size() < b.size())
+			return _add(b, a);
+
+		int max_size = a.size(), min_size = b.size();
+		std::vector<uint32_t> ans;
+		uint64_t val = 0;
+		for (int i = 0; i < min_size; ++i) {
+			val += 0ULL + a[i] + b[i];
+			ans.emplace_back(val % _base);
+			val /= _base;
+		}
+		for (int i = min_size; i < max_size; ++i) {
+			val += a[i];
+			ans.emplace_back(val % _base);
+			val /= _base;
+		}
+		if (val)
+			ans.emplace_back(val);
+		return ans;
+	}
+
+	static std::vector<uint32_t> _sub(const std::vector<uint32_t> &a, const std::vector<uint32_t> &b) {
+		int max_size = a.size(), min_size = b.size();
+		std::vector<uint32_t> ans;
+		uint32_t borrow = 0;
+		for (int i = 0; i < min_size; ++i) {
+			if (a[i] < b[i] || (a[i] == b[i] && borrow)) {
+				ans.emplace_back(_base - b[i] - borrow + a[i]);
+				borrow = 1;
+			} else {
+				ans.emplace_back(a[i] - b[i] - borrow);
+				borrow = 0;
+			}
+		}
+		for (int i = min_size; i < max_size; ++i) {
+			if (!a[i] && borrow) {
+				ans.emplace_back(_base - borrow);
+				borrow = 1;
+			} else {
+				ans.emplace_back(a[i] - borrow);
+				borrow = 0;
+			}
+		}
+		while (ans.size() > 1 && !ans.back())
+			ans.pop_back();
+		return ans;
+	}
+
 public:
 	Integer(void): _negative(false), _data(1, 0) { }
 	virtual ~Integer(void) { }
@@ -141,6 +190,42 @@ public:
 
 	friend bool operator >=(const Integer &lhs, const Integer &rhs) {
 		return lhs == rhs || lhs > rhs;
+	}
+
+	friend Integer operator +(const Integer &lhs, const Integer &rhs) {
+		Integer ans;
+		if (lhs._negative == rhs._negative) {
+			ans._negative = lhs._negative;
+			ans._data = std::move(_add(lhs._data, rhs._data));
+		} else {
+			int cmp = _compare(lhs._data, rhs._data);
+			if (cmp > 0) {
+				ans._negative = lhs._negative;
+				ans._data = std::move(_sub(lhs._data, rhs._data));
+			} else if (cmp < 0) {
+				ans._negative = rhs._negative;
+				ans._data = std::move(_sub(rhs._data, lhs._data));
+			}
+		}
+		return ans;
+	}
+
+	friend Integer operator -(const Integer &lhs, const Integer &rhs) {
+		Integer ans;
+		if (lhs._negative != rhs._negative) {
+			ans._negative = lhs._negative;
+			ans._data = std::move(_add(lhs._data, rhs._data));
+		} else {
+			int cmp = _compare(lhs._data, rhs._data);
+			if (cmp > 0) {
+				ans._negative = lhs._negative;
+				ans._data = std::move(_sub(lhs._data, rhs._data));
+			} else if (cmp < 0) {
+				ans._negative = !rhs._negative;
+				ans._data = std::move(_sub(rhs._data, lhs._data));
+			}
+		}
+		return ans;
 	}
 };
 
