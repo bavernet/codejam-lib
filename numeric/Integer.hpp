@@ -31,7 +31,7 @@ private:
 	}
 
 public:
-	Integer(void): _negative(false) { }
+	Integer(void): _negative(false), _data(1, 0) { }
 	virtual ~Integer(void) { }
 
 	template <typename T, typename=typename std::enable_if<std::is_arithmetic<T>::value>::type>
