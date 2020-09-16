@@ -47,7 +47,10 @@ public:
 			_data.emplace_back(v);
 	}
 
-	Integer(const std::string &s): _negative(false) {
+	Integer(const std::string &s, uint32_t base=10U): _negative(false) {
+		if (base > 36U)
+			throw std::runtime_error("Integer does not support conversions beyond base 36: current base=" + base);
+
 		if (!s.empty()) {
 			auto it = s.begin(), end = s.end();
 
@@ -57,12 +60,17 @@ public:
 				++it;
 
 			for ( ; it != end; ++it) {
-				if (!isdigit(*it))
-					throw std::runtime_error("Integer cannot be initialized from a non-number string: " + s);
+				char c = isalpha(*it)? toupper(*it): *it;
+				uint64_t val = c;
+				if (isdigit(c) && val - '0' < base)
+					val = val - '0';
+				else if (isalpha(c) && base > 10 && val - 'A' < base - 10)
+					val = val - 'A' + 10;
+				else
+					throw std::runtime_error("Integer cannot be initialized from a invalid string: " + s);
 
-				uint64_t val = *it - '0';
 				for (auto &d : _data) {
-					val += 10ULL * d;
+					val += 1ULL * base * d;
 					d = val % _base;
 					val /= _base;
 				}
