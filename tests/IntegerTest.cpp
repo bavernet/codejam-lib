@@ -46,7 +46,7 @@ TEST_F(IntegerTest, constructFromNumber) {
 	EXPECT_EQ(iMinusOne, dMinusOnePointTwo);
 }
 
-TEST_F(IntegerTest, constructFromString) {
+TEST_F(IntegerTest, fromString10) {
 	EXPECT_EQ(sOne, 1);
 	EXPECT_EQ(1, sOne);
 	EXPECT_EQ(sMinusOne, -1);
@@ -83,6 +83,157 @@ TEST_F(IntegerTest, constructFromString) {
 	EXPECT_NE(b2, iOne);
 	EXPECT_NE(b3, iOne);
 	EXPECT_NE(b4, iOne);
+}
+
+TEST_F(IntegerTest, fromString2) {
+	EXPECT_EQ(Integer("1", 2),     Integer(1));
+	EXPECT_EQ(Integer("10", 2),    Integer(2));
+	EXPECT_EQ(Integer("11", 2),    Integer(3));
+	EXPECT_EQ(Integer("100", 2),   Integer(4));
+	EXPECT_EQ(Integer("101", 2),   Integer(5));
+	EXPECT_EQ(Integer("110", 2),   Integer(6));
+	EXPECT_EQ(Integer("111", 2),   Integer(7));
+	EXPECT_EQ(Integer("1000", 2),  Integer(8));
+	EXPECT_EQ(Integer("1001", 2),  Integer(9));
+	EXPECT_EQ(Integer("1010", 2),  Integer(10));
+	EXPECT_EQ(Integer("1001111110010000011011001100100100011010111110110010011011000101101110001110011000000100010101", 2),
+			  Integer("12345678901234567890123456789"));
+
+	EXPECT_EQ(Integer("-1", 2),    Integer(-1));
+	EXPECT_EQ(Integer("-10", 2),   Integer(-2));
+	EXPECT_EQ(Integer("-11", 2),   Integer(-3));
+	EXPECT_EQ(Integer("-100", 2),  Integer(-4));
+	EXPECT_EQ(Integer("-101", 2),  Integer(-5));
+	EXPECT_EQ(Integer("-110", 2),  Integer(-6));
+	EXPECT_EQ(Integer("-111", 2),  Integer(-7));
+	EXPECT_EQ(Integer("-1000", 2), Integer(-8));
+	EXPECT_EQ(Integer("-1001", 2), Integer(-9));
+	EXPECT_EQ(Integer("-1010", 2), Integer(-10));
+	EXPECT_EQ(Integer("-1001111110010000011011001100100100011010111110110010011011000101101110001110011000000100010101", 2),
+			  Integer("-12345678901234567890123456789"));
+}
+
+
+TEST_F(IntegerTest, fromString8) {
+	EXPECT_EQ(Integer("1", 8),   Integer(1));
+	EXPECT_EQ(Integer("2", 8),   Integer(2));
+	EXPECT_EQ(Integer("3", 8),   Integer(3));
+	EXPECT_EQ(Integer("4", 8),   Integer(4));
+	EXPECT_EQ(Integer("5", 8),   Integer(5));
+	EXPECT_EQ(Integer("6", 8),   Integer(6));
+	EXPECT_EQ(Integer("7", 8),   Integer(7));
+	EXPECT_EQ(Integer("10", 8),  Integer(8));
+	EXPECT_EQ(Integer("11", 8),  Integer(9));
+	EXPECT_EQ(Integer("12", 8),  Integer(10));
+	EXPECT_EQ(Integer("11762033144432766233055616300425", 8),
+			  Integer("12345678901234567890123456789"));
+
+	EXPECT_EQ(Integer("-1", 8),   Integer(-1));
+	EXPECT_EQ(Integer("-2", 8),   Integer(-2));
+	EXPECT_EQ(Integer("-3", 8),   Integer(-3));
+	EXPECT_EQ(Integer("-4", 8),   Integer(-4));
+	EXPECT_EQ(Integer("-5", 8),   Integer(-5));
+	EXPECT_EQ(Integer("-6", 8),   Integer(-6));
+	EXPECT_EQ(Integer("-7", 8),   Integer(-7));
+	EXPECT_EQ(Integer("-10", 8),  Integer(-8));
+	EXPECT_EQ(Integer("-11", 8),  Integer(-9));
+	EXPECT_EQ(Integer("-12", 8),  Integer(-10));
+	EXPECT_EQ(Integer("-11762033144432766233055616300425", 8),
+			  Integer("-12345678901234567890123456789"));
+
+	EXPECT_EQ(Integer("-1", 16),   Integer(-1));
+	EXPECT_EQ(Integer("-2", 16),   Integer(-2));
+	EXPECT_EQ(Integer("-3", 16),   Integer(-3));
+	EXPECT_EQ(Integer("-4", 16),   Integer(-4));
+	EXPECT_EQ(Integer("-5", 16),   Integer(-5));
+	EXPECT_EQ(Integer("-6", 16),   Integer(-6));
+	EXPECT_EQ(Integer("-7", 16),   Integer(-7));
+	EXPECT_EQ(Integer("-8", 16),   Integer(-8));
+	EXPECT_EQ(Integer("-9", 16),   Integer(-9));
+	EXPECT_EQ(Integer("-A", 16),   Integer(-10));
+	EXPECT_EQ(Integer("-B", 16),   Integer(-11));
+	EXPECT_EQ(Integer("-C", 16),   Integer(-12));
+	EXPECT_EQ(Integer("-D", 16),   Integer(-13));
+	EXPECT_EQ(Integer("-E", 16),   Integer(-14));
+	EXPECT_EQ(Integer("-F", 16),   Integer(-15));
+	EXPECT_EQ(Integer("-10", 16),  Integer(-16));
+	EXPECT_EQ(Integer("-11", 16),  Integer(-17));
+	EXPECT_EQ(Integer("-12", 16),  Integer(-18));
+	EXPECT_EQ(Integer("-13", 16),  Integer(-19));
+	EXPECT_EQ(Integer("-14", 16),  Integer(-20));
+	EXPECT_EQ(Integer("-27E41B3246BEC9B16E398115", 16),
+			  Integer("-12345678901234567890123456789"));
+
+	EXPECT_EQ(Integer("-1", 16),   Integer(-1));
+	EXPECT_EQ(Integer("-2", 16),   Integer(-2));
+	EXPECT_EQ(Integer("-3", 16),   Integer(-3));
+	EXPECT_EQ(Integer("-4", 16),   Integer(-4));
+	EXPECT_EQ(Integer("-5", 16),   Integer(-5));
+	EXPECT_EQ(Integer("-6", 16),   Integer(-6));
+	EXPECT_EQ(Integer("-7", 16),   Integer(-7));
+	EXPECT_EQ(Integer("-8", 16),   Integer(-8));
+	EXPECT_EQ(Integer("-9", 16),   Integer(-9));
+	EXPECT_EQ(Integer("-a", 16),   Integer(-10));
+	EXPECT_EQ(Integer("-b", 16),   Integer(-11));
+	EXPECT_EQ(Integer("-c", 16),   Integer(-12));
+	EXPECT_EQ(Integer("-d", 16),   Integer(-13));
+	EXPECT_EQ(Integer("-e", 16),   Integer(-14));
+	EXPECT_EQ(Integer("-f", 16),   Integer(-15));
+	EXPECT_EQ(Integer("-10", 16),  Integer(-16));
+	EXPECT_EQ(Integer("-11", 16),  Integer(-17));
+	EXPECT_EQ(Integer("-12", 16),  Integer(-18));
+	EXPECT_EQ(Integer("-13", 16),  Integer(-19));
+	EXPECT_EQ(Integer("-14", 16),  Integer(-20));
+	EXPECT_EQ(Integer("-27e41b3246bec9b16e398115", 16),
+			  Integer("-12345678901234567890123456789"));
+}
+
+TEST_F(IntegerTest, fromString16) {
+	EXPECT_EQ(Integer("1", 16),   Integer(1));
+	EXPECT_EQ(Integer("2", 16),   Integer(2));
+	EXPECT_EQ(Integer("3", 16),   Integer(3));
+	EXPECT_EQ(Integer("4", 16),   Integer(4));
+	EXPECT_EQ(Integer("5", 16),   Integer(5));
+	EXPECT_EQ(Integer("6", 16),   Integer(6));
+	EXPECT_EQ(Integer("7", 16),   Integer(7));
+	EXPECT_EQ(Integer("8", 16),   Integer(8));
+	EXPECT_EQ(Integer("9", 16),   Integer(9));
+	EXPECT_EQ(Integer("A", 16),   Integer(10));
+	EXPECT_EQ(Integer("B", 16),   Integer(11));
+	EXPECT_EQ(Integer("C", 16),   Integer(12));
+	EXPECT_EQ(Integer("D", 16),   Integer(13));
+	EXPECT_EQ(Integer("E", 16),   Integer(14));
+	EXPECT_EQ(Integer("F", 16),   Integer(15));
+	EXPECT_EQ(Integer("10", 16),  Integer(16));
+	EXPECT_EQ(Integer("11", 16),  Integer(17));
+	EXPECT_EQ(Integer("12", 16),  Integer(18));
+	EXPECT_EQ(Integer("13", 16),  Integer(19));
+	EXPECT_EQ(Integer("14", 16),  Integer(20));
+	EXPECT_EQ(Integer("27E41B3246BEC9B16E398115", 16),
+			  Integer("12345678901234567890123456789"));
+
+	EXPECT_EQ(Integer("1", 16),   Integer(1));
+	EXPECT_EQ(Integer("2", 16),   Integer(2));
+	EXPECT_EQ(Integer("3", 16),   Integer(3));
+	EXPECT_EQ(Integer("4", 16),   Integer(4));
+	EXPECT_EQ(Integer("5", 16),   Integer(5));
+	EXPECT_EQ(Integer("6", 16),   Integer(6));
+	EXPECT_EQ(Integer("7", 16),   Integer(7));
+	EXPECT_EQ(Integer("8", 16),   Integer(8));
+	EXPECT_EQ(Integer("9", 16),   Integer(9));
+	EXPECT_EQ(Integer("a", 16),   Integer(10));
+	EXPECT_EQ(Integer("b", 16),   Integer(11));
+	EXPECT_EQ(Integer("c", 16),   Integer(12));
+	EXPECT_EQ(Integer("d", 16),   Integer(13));
+	EXPECT_EQ(Integer("e", 16),   Integer(14));
+	EXPECT_EQ(Integer("f", 16),   Integer(15));
+	EXPECT_EQ(Integer("10", 16),  Integer(16));
+	EXPECT_EQ(Integer("11", 16),  Integer(17));
+	EXPECT_EQ(Integer("12", 16),  Integer(18));
+	EXPECT_EQ(Integer("13", 16),  Integer(19));
+	EXPECT_EQ(Integer("14", 16),  Integer(20));
+	EXPECT_EQ(Integer("27e41b3246bec9b16e398115", 16),
+			  Integer("12345678901234567890123456789"));
 }
 
 TEST_F(IntegerTest, toString10) {
