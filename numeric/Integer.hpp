@@ -16,7 +16,7 @@ private:
 	std::vector<uint32_t> _data;
 
 private:
-	static const uint64_t _base { std::numeric_limits<uint32_t>::max() };
+	static const uint64_t _base { std::numeric_limits<uint32_t>::max() + 1ULL };
 
 	static int _compare(const std::vector<uint32_t> &a, const std::vector<uint32_t> &b) {
 		if (a.size() != b.size())
