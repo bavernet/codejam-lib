@@ -196,15 +196,15 @@ public:
 		Integer ans;
 		if (lhs._negative == rhs._negative) {
 			ans._negative = lhs._negative;
-			ans._data = std::move(_add(lhs._data, rhs._data));
+			ans._data = _add(lhs._data, rhs._data);
 		} else {
 			int cmp = _compare(lhs._data, rhs._data);
 			if (cmp > 0) {
 				ans._negative = lhs._negative;
-				ans._data = std::move(_sub(lhs._data, rhs._data));
+				ans._data = _sub(lhs._data, rhs._data);
 			} else if (cmp < 0) {
 				ans._negative = rhs._negative;
-				ans._data = std::move(_sub(rhs._data, lhs._data));
+				ans._data = _sub(rhs._data, lhs._data);
 			}
 		}
 		return ans;
@@ -214,15 +214,15 @@ public:
 		Integer ans;
 		if (lhs._negative != rhs._negative) {
 			ans._negative = lhs._negative;
-			ans._data = std::move(_add(lhs._data, rhs._data));
+			ans._data = _add(lhs._data, rhs._data);
 		} else {
 			int cmp = _compare(lhs._data, rhs._data);
 			if (cmp > 0) {
 				ans._negative = lhs._negative;
-				ans._data = std::move(_sub(lhs._data, rhs._data));
+				ans._data = _sub(lhs._data, rhs._data);
 			} else if (cmp < 0) {
 				ans._negative = !rhs._negative;
-				ans._data = std::move(_sub(rhs._data, lhs._data));
+				ans._data = _sub(rhs._data, lhs._data);
 			}
 		}
 		return ans;
