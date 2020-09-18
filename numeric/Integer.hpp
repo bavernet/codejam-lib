@@ -93,13 +93,6 @@ private:
 	}
 
 	static std::vector<uint32_t> _mul(const std::vector<uint32_t> &a, const std::vector<uint32_t> &b) {
-		/*
-		ab * cd;
-		(a*10^n + b) + (c*10^n + d)
-		= ac*10^2n + (bc + ad)*10^n + bd;
-		= ac*10^2n + bd + ((a + b)(c + d) - ac - bd)*10^n;
-		*/
-
 		int max_size = a.size(), min_size = b.size();
 		if (max_size < min_size)
 			return _mul(b, a);
@@ -108,6 +101,21 @@ private:
 		if (min_size == 1)
 			return _mul_one(a, b.front());
 
+		/*
+		 * It is _karatsuba algorithm_ which is one of divide and conquer strategies.
+		 * By elimination of a sub-multiplication, it can have better performance.
+		 *
+		 * description:
+		 * a = a0 + a1 * (_base ^ max_half)
+		 * b = b0 + b1 * (_base ^ max_half)
+		 * c = a * b
+		 *   = (a0 + a1 * (_base ^ max_half)) * (b0 + b1 * (_base ^ max_half))
+		 *   = (a0 * b0) + (a1 * b0 + a0 * b1) * (_base ^ max_half) + (a1 * b1) * (_base ^ (2 * max_half))
+		 *   = (a0 * b0) + (a1 * b1) * (_base ^ (2 * max_half))
+		 *     + {(a0 + a1) * (b0 + b1) - (a0 * b0) - (a1 * b1)} * (_base ^ max_half)
+		 *   = c0 + c2 * (_base ^ (2 * max_half)) + (t0 * t1 - c0 - c2) * (_base ^ max_half)
+		 *   = c0 + c1 * (_base ^ max_half) + c2 * (_base ^ (2 * max_half))
+		 */
 		int max_half = max_size / 2, min_half = std::min(min_size, max_half);
 		std::vector<uint32_t> a0(a.begin(), a.begin() + max_half);
 		std::vector<uint32_t> a1(a.begin() + max_half, a.end());
