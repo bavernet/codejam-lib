@@ -79,6 +79,53 @@ private:
 		return ans;
 	}
 
+	static std::vector<uint32_t> _mul_one(const std::vector<uint32_t> &a, uint64_t b) {
+		std::vector<uint32_t> ans;
+		uint64_t val = 0;
+		for (int i = 0, n = a.size(); i < n; ++i) {
+			val += a[i] * b;
+			ans.emplace_back(val % _base);
+			val /= _base;
+		}
+		if (val)
+			ans.emplace_back(val);
+		return ans;
+	}
+
+	static std::vector<uint32_t> _mul(const std::vector<uint32_t> &a, const std::vector<uint32_t> &b) {
+		/*
+		ab * cd;
+		(a*10^n + b) + (c*10^n + d)
+		= ac*10^2n + (bc + ad)*10^n + bd;
+		= ac*10^2n + bd + ((a + b)(c + d) - ac - bd)*10^n;
+		*/
+
+		int max_size = a.size(), min_size = b.size();
+		if (max_size < min_size)
+			return _mul(b, a);
+		if (min_size == 0)
+			return std::vector<uint32_t>();
+		if (min_size == 1)
+			return _mul_one(a, b.front());
+
+		int max_half = max_size / 2, min_half = std::min(min_size, max_half);
+		std::vector<uint32_t> a0(a.begin(), a.begin() + max_half);
+		std::vector<uint32_t> a1(a.begin() + max_half, a.end());
+		std::vector<uint32_t> b0(b.begin(), b.begin() + min_half);
+		std::vector<uint32_t> b1(b.begin() + min_half, b.end());
+
+		std::vector<uint32_t> c2 = _mul(a1, b1);
+		std::vector<uint32_t> c0 = _mul(a0, b0);
+
+		std::vector<uint32_t> t0 = _add(a0, a1);
+		std::vector<uint32_t> t1 = _add(b0, b1);
+		std::vector<uint32_t> c1 = _sub(_mul(t0, t1), _add(c0, c2));
+
+		c2.insert(c2.begin(), max_half + max_half, 0U);
+		c1.insert(c1.begin(), max_half, 0U);
+		return _add(c0, _add(c1, c2));
+	}
+
 public:
 	Integer(void): _negative(false), _data(1, 0) { }
 	virtual ~Integer(void) { }
@@ -225,6 +272,15 @@ public:
 				ans._data = _sub(rhs._data, lhs._data);
 			}
 		}
+		return ans;
+	}
+
+	friend Integer operator *(const Integer &lhs, const Integer &rhs) {
+		Integer ans;
+		ans._negative = lhs._negative != rhs._negative;
+		ans._data = _mul(lhs._data, rhs._data);
+		if (ans._data.empty() || (ans._data.size() == 1 && ans._data[0] == 0))
+			ans._negative = false;
 		return ans;
 	}
 };
